@@ -1,10 +1,20 @@
 package dev.gungeon.utilities;
 
 public class LinkedList<T> implements LinkedListInterface<T> {
-    private Node<T> start = null;
-    private Node<T> last = null;
-    private Node<T> current = null;
-    private int size = 0;
+    private Node<T> start;
+    private Node<T> last;
+    private Node<T> current;
+    private int size;
+
+    public LinkedList() {
+        Node<T> start = null;
+        Node<T> last = null;
+        Node<T> current = null;
+        int size = 0;
+    }
+    public LinkedList(T element) {
+        Add(element);
+    }
 
     public void Add(T element){
         if(start == null)
