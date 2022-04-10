@@ -1,6 +1,6 @@
 package dev.gungeon.tests;
 
-import dev.gungeon.utilities.Map;
+import dev.gungeon.utilities.structures.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

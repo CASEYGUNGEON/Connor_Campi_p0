@@ -1,5 +1,5 @@
 package dev.gungeon.tests;
-import dev.gungeon.utilities.Node;
+import dev.gungeon.utilities.structures.Node;
 import org.junit.jupiter.api.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

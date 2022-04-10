@@ -1,4 +1,4 @@
-package dev.gungeon.utilities;
+package dev.gungeon.utilities.structures;
 
 public class Map<K,V> implements MapInterface<K,V> {
     private K[] keys;

@@ -1,4 +1,4 @@
-package dev.gungeon.utilities;
+package dev.gungeon.utilities.structures;
 
 public class Node<T> implements NodeInterface<T> {
     private T data;

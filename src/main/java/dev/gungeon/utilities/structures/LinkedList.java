@@ -1,4 +1,8 @@
-package dev.gungeon.utilities;
+package dev.gungeon.utilities.structures;
+
+import dev.gungeon.utilities.exceptions.ElementExistsException;
+import dev.gungeon.utilities.exceptions.ElementNotFoundException;
+import dev.gungeon.utilities.exceptions.EmptyListException;
 
 public class LinkedList<T> implements LinkedListInterface<T> {
     private Node<T> start;
@@ -16,7 +20,7 @@ public class LinkedList<T> implements LinkedListInterface<T> {
         Add(element);
     }
 
-    public void Add(T element){
+    public void Add(T element) {
         if(start == null)
         {
             start = new Node<T>(element);
@@ -31,9 +35,13 @@ public class LinkedList<T> implements LinkedListInterface<T> {
         }
     }
 
-    public void Remove(Node<T> target){
+    public void Remove(Node<T> target) throws EmptyListException, ElementNotFoundException {
+        if(!Contains(target.Get())){
+            throw new ElementNotFoundException("Element not found");
+        }
+
         switch(size){
-            case 0: break;
+            case 0: throw new EmptyListException("List is empty");
             case 1:{
                 if(start.Get() == target) {
                     start = null;
@@ -47,8 +55,6 @@ public class LinkedList<T> implements LinkedListInterface<T> {
                 while(iter.Next() != target){
                     prev = iter;
                     iter = iter.Next();
-                    if(iter.Next() == null)
-                        return;
                 }
                 if(iter == last) {
                     last = prev;
@@ -61,6 +67,10 @@ public class LinkedList<T> implements LinkedListInterface<T> {
                 }
             }break;
         }
+    }
+
+    public void Remove(T element) throws ElementNotFoundException, EmptyListException {
+        Remove(FindNode(element));
     }
 
     public boolean Contains(T element){
@@ -81,9 +91,9 @@ public class LinkedList<T> implements LinkedListInterface<T> {
         return false;
     }
 
-    public Node<T> FindNode(T element){
+    public Node<T> FindNode(T element) throws EmptyListException, ElementNotFoundException {
         if(start == null)
-            return null;
+            throw new EmptyListException("List is empty");
 
         Node<T> cur = start;
 
@@ -94,12 +104,12 @@ public class LinkedList<T> implements LinkedListInterface<T> {
                 cur = cur.Next();
         } while (cur.Next() != null);
 
-        return null;
+        throw new ElementNotFoundException("Element not found");
     }
 
-    public Node<T> FindPrev(){
+    public Node<T> FindPrev() throws IndexOutOfBoundsException, Exception {
         if(start == null || last == start)
-            return null;
+            throw new IndexOutOfBoundsException("Node does not exist");
         else
         {
             Node<T> cur = start;
@@ -110,13 +120,13 @@ public class LinkedList<T> implements LinkedListInterface<T> {
                     cur = cur.Next();
             } while (cur.Next() != null);
 
-            return null;
+            throw new Exception("???");
         }
     }
 
-    public Node<T> FindPrev(Node<T> node){
+    public Node<T> FindPrev(Node<T> node) throws IndexOutOfBoundsException {
         if(start == null || last == start)
-            return null;
+            throw new IndexOutOfBoundsException("Out of bounds");
         else
         {
             Node<T> cur = start;
@@ -127,11 +137,11 @@ public class LinkedList<T> implements LinkedListInterface<T> {
                     cur = cur.Next();
             } while (cur.Next() != null);
 
-            return null;
+            throw new IndexOutOfBoundsException("Out of bounds");
         }
     }
 
-    public T GoToNext(){
+    public T GoToNext() throws IndexOutOfBoundsException {
         if(current == null) {
             current = start;
             return current.Get();
@@ -141,24 +151,32 @@ public class LinkedList<T> implements LinkedListInterface<T> {
             return current.Get();
         }
         else
-            return null;
+            throw new IndexOutOfBoundsException("Out of bounds");
     }
 
-    public T GoToStart(){
+    public T GoToStart() throws EmptyListException {
         if(start != null) {
             current = start;
             return start.Get();
         }
         else
-            return null;
+            throw new EmptyListException("List is empty");
+    }
+
+    public void ResetCrawl() {
+        current = null;
     }
 
     public Node<T> GetStart(){
         return start;
     }
 
-    public Node<T> GetCurrent(){
+    public Node<T> GetCurrentNode(){
         return current;
+    }
+
+    public T GetCurrent() {
+        return current.Get();
     }
 
     public Node<T> GetLast(){

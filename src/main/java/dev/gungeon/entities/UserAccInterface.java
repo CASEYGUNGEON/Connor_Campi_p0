@@ -1,32 +1,36 @@
 package dev.gungeon.entities;
 
-import dev.gungeon.utilities.*;
+import dev.gungeon.utilities.exceptions.*;
+import dev.gungeon.utilities.structures.LinkedList;
+import dev.gungeon.utilities.structures.Map;
 
 public interface UserAccInterface {
 
-    String[] GetAccs();
+    LinkedList<Account> GetAccs();
 
-    double Deposit(String acc, double x);
+    String GetName();
 
-    double Withdraw(String acc, double x);
+    int GetId();
 
-    double ViewBalance(String acc);
+    void Deposit(int acc, double x) throws ElementNotFoundException;
 
-    Map<String,Double> ViewAllBalances();
+    void Withdraw(int acc, double x) throws InsufficientFundsException, ElementNotFoundException;
 
-    boolean CreateAcc(String name);
+    double ViewBalance(int acc) throws ElementNotFoundException;
 
-    void LinkUser(String user, String acc);
+    void CreateAcc(String name, int id) throws ElementExistsException;
 
-    void UnlinkUser(String user, String acc);
+    void LinkUser(int user, int acc) throws ElementExistsException, ElementNotFoundException;
 
-    LinkedList<String> GetLinks(String acc);
+    void UnlinkUser(int user, int acc) throws NotALinkedUserException, ElementNotFoundException, EmptyListException;
 
-    boolean GetUserLinked(String user);
+    LinkedList<Integer> GetLinks(int acc) throws ElementNotFoundException;
 
-    boolean GetUserLinkedToAcc(String user, String acc);
+    boolean GetUserLinkedToAcc(int user, int acc) throws ElementNotFoundException;
 
-    boolean Transfer(String from, String to, double x);
+    void Transfer(int from, int to, double x) throws ElementNotFoundException, InsufficientFundsException;
 
-    LinkedList<Double> AccHistory(String acc);
+    LinkedList<Double> AccHistory(int acc) throws ElementNotFoundException;
+
+    Account FindAccount(int num) throws ElementNotFoundException;
 }

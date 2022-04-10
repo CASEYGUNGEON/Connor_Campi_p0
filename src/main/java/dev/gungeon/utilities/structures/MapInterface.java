@@ -1,4 +1,4 @@
-package dev.gungeon.utilities;
+package dev.gungeon.utilities.structures;
 
 public interface MapInterface<K,V> {
 
