@@ -6,11 +6,19 @@ public class Account implements AccountInterface {
 
     private String name;
     private int identifier;
+    private int owner;
     private double balance;
     private LinkedList<Double> history;
     private LinkedList<Integer> linked;
 
     public Account() {
+        balance = 0;
+        history = new LinkedList<Double>();
+        linked = new LinkedList<Integer>();
+    }
+
+    public Account(int id) {
+        identifier = id;
         balance = 0;
         history = new LinkedList<Double>();
         linked = new LinkedList<Integer>();
@@ -23,8 +31,17 @@ public class Account implements AccountInterface {
         linked = new LinkedList<Integer>();
     }
 
-    public Account(String n, int id) {
+    public Account(String n, int o) {
         name = n;
+        owner = o;
+        balance = 0;
+        history = new LinkedList<Double>();
+        linked = new LinkedList<Integer>();
+    }
+
+    public Account(String n, int o, int id) {
+        name = n;
+        owner = o;
         identifier = id;
         balance = 0;
         history = new LinkedList<Double>();
@@ -47,6 +64,14 @@ public class Account implements AccountInterface {
         return identifier;
     }
 
+    public int GetOwner() {
+        return owner;
+    }
+
+    public void SetOwner(int o) {
+        owner = o;
+    }
+
     public void Deposit(double x) {
         balance += x;
         history.Add(x);
@@ -63,6 +88,10 @@ public class Account implements AccountInterface {
 
     public double GetBalance() {
         return balance;
+    }
+
+    public void SetBalance(double b) {
+        balance = b;
     }
 
     public void LinkUser(int user) throws ElementExistsException {

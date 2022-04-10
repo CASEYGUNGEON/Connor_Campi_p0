@@ -13,7 +13,7 @@ public class LinkedListTests {
     void SetFirst() throws Exception {
         testList.Add("Test");
         Assertions.assertEquals(1,testList.Size());
-        Assertions.assertEquals("Test",testList.GoToStart());
+        Assertions.assertTrue(testList.Contains("Test"));
     }
 
     @Test

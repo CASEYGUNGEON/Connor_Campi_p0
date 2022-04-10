@@ -14,7 +14,7 @@ public class UserAccTests {
     @Test
     @Order(1)
     void MakeAndCheckTest() {
-        test = new UserAcc("User 1", 123);
+        test = new UserAcc("User 1", "bicycle12", 123);
         Assertions.assertEquals("User 1", test.GetName());
         Assertions.assertEquals(123, test.GetId());
     }
@@ -22,8 +22,8 @@ public class UserAccTests {
     @Test
     @Order(2)
     void MoneyTest() throws Exception {
-        test.CreateAcc("Checking", 1);
-        test.CreateAcc("Savings", 2);
+        test.CreateAcc("Checking");
+        test.CreateAcc("Savings");
         test.Deposit(1,24.5);
         test.Transfer(1, 2, 10);
         test.Withdraw(2, 5);
@@ -43,5 +43,7 @@ public class UserAccTests {
     void LinkTest() throws Exception {
         test.LinkUser(234, 1);
         Assertions.assertTrue(test.GetUserLinkedToAcc(234, 1));
+        test.UnlinkUser(234,1);
+        Assertions.assertFalse(test.GetUserLinkedToAcc(234, 1));
     }
 }

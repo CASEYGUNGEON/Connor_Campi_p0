@@ -6,11 +6,17 @@ import dev.gungeon.utilities.structures.Map;
 
 public interface UserAccInterface {
 
+    void SetPassword(String pw);
+
+    String GetPassword();
+
     LinkedList<Account> GetAccs();
 
     String GetName();
 
     int GetId();
+
+    void SetId(int id);
 
     void Deposit(int acc, double x) throws ElementNotFoundException;
 
@@ -18,7 +24,7 @@ public interface UserAccInterface {
 
     double ViewBalance(int acc) throws ElementNotFoundException;
 
-    void CreateAcc(String name, int id) throws ElementExistsException;
+    void CreateAcc(String name) throws ElementExistsException;
 
     void LinkUser(int user, int acc) throws ElementExistsException, ElementNotFoundException;
 

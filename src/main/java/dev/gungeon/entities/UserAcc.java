@@ -3,17 +3,28 @@ package dev.gungeon.entities;
 import dev.gungeon.utilities.exceptions.*;
 import dev.gungeon.utilities.structures.LinkedList;
 import dev.gungeon.utilities.structures.Map;
+import dev.gungeon.utilities.structures.Node;
 
 public class UserAcc implements UserAccInterface {
 
     private LinkedList<Account> accounts;
     private String accName;
+    private String password;
     private int accId;
 
-    public UserAcc(String name, int id) {
+    public UserAcc(String name, String pw, int id) {
         accounts = new LinkedList<Account>();
         accName = name;
+        password = pw;
         accId = id;
+    }
+
+    public void SetPassword(String pw) {
+        password = pw;
+    }
+
+    public String GetPassword() {
+        return password;
     }
 
     public String GetName() {
@@ -22,6 +33,10 @@ public class UserAcc implements UserAccInterface {
 
     public int GetId() {
         return accId;
+    }
+
+    public void SetId(int id) {
+        accId = id;
     }
 
     public LinkedList<Account> GetAccs() {
@@ -41,8 +56,8 @@ public class UserAcc implements UserAccInterface {
         return FindAccount(acc).GetBalance();
     }
 
-    public void CreateAcc(String name, int id) throws ElementExistsException {
-        accounts.Add(new Account(name, id));
+    public void CreateAcc(String name) throws ElementExistsException {
+        accounts.Add(new Account(name,accId));
     }
 
     public void LinkUser(int user, int acc) throws ElementNotFoundException, ElementExistsException {
@@ -75,11 +90,13 @@ public class UserAcc implements UserAccInterface {
     }
 
     public Account FindAccount(int num) throws ElementNotFoundException {
-        accounts.ResetCrawl();
-        for(int i = 0; i < accounts.Size(); i++) {
-            if(accounts.GoToNext().GetIdentifier() == num) {
-                return accounts.GetCurrent();
+        Node<Account> cur = accounts.GetStart();
+        while(cur != null) {
+            if(cur.Get().GetIdentifier() == num)
+            {
+                return cur.Get();
             }
+            cur = cur.Next();
         }
         throw new ElementNotFoundException("Account not found");
     }

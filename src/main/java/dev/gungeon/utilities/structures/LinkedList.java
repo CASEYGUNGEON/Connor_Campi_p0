@@ -35,59 +35,47 @@ public class LinkedList<T> implements LinkedListInterface<T> {
         }
     }
 
-    public void Remove(Node<T> target) throws EmptyListException, ElementNotFoundException {
-        if(!Contains(target.Get())){
-            throw new ElementNotFoundException("Element not found");
+    public void Remove(Node<T> prev, Node<T> target) {
+        if(prev != null)
+        {
+            prev.SetNext(target.Next());
         }
-
-        switch(size){
-            case 0: throw new EmptyListException("List is empty");
-            case 1:{
-                if(start.Get() == target) {
-                    start = null;
-                    last = null;
-                    size = 0;
-                }
-            }break;
-            default:{
-                Node<T> iter = start;
-                Node<T> prev = null;
-                while(iter.Next() != target){
-                    prev = iter;
-                    iter = iter.Next();
-                }
-                if(iter == last) {
-                    last = prev;
-                    prev.SetNext(null);
-                    size--;
-                }
-                else{
-                    prev.SetNext(iter.Next());
-                    size--;
-                }
-            }break;
+        else {
+            start = null;
+        }
+        if(target.Next() == null) {
+            last = null;
         }
     }
 
     public void Remove(T element) throws ElementNotFoundException, EmptyListException {
-        Remove(FindNode(element));
+        Node<T> cur = start;
+        if(cur == null) {
+            throw new EmptyListException("Empty list");
+        }
+        Node<T> last = null;
+        while(cur != null) {
+            if(element.equals(cur.Get())) {
+                Remove(last,cur);
+                return;
+            }
+            last = cur;
+            cur = cur.Next();
+        }
+        throw new ElementNotFoundException("Element Not Found");
     }
 
-    public boolean Contains(T element){
-        if(size == 0)
-            return false;
-
-        if(size == 1){
-            return start.Get() == element;
+    public boolean Contains(T element) {
+        if(size > 0){
+            Node<T> cur = start;
+            while(cur != null) {
+                if (element.equals(cur.Get()))
+                    return true;
+                else {
+                    cur = cur.Next();
+                }
+            }
         }
-
-        Node<T> cur = start.Next();
-        do {
-            if(cur.Get() == element)
-                return true;
-            else
-                cur = cur.Next();
-        } while(cur.Next() != null);
         return false;
     }
 
@@ -97,17 +85,17 @@ public class LinkedList<T> implements LinkedListInterface<T> {
 
         Node<T> cur = start;
 
-        do{
-            if(cur.Get() == element)
+        while(cur != null){
+            if(cur.Get().equals(element))
                 return cur;
             else
                 cur = cur.Next();
-        } while (cur.Next() != null);
+        }
 
         throw new ElementNotFoundException("Element not found");
     }
 
-    public Node<T> FindPrev() throws IndexOutOfBoundsException, Exception {
+    public Node<T> FindPrev() throws Exception {
         if(start == null || last == start)
             throw new IndexOutOfBoundsException("Node does not exist");
         else
@@ -163,6 +151,14 @@ public class LinkedList<T> implements LinkedListInterface<T> {
             throw new EmptyListException("List is empty");
     }
 
+    public T GoToIndex(int x) throws IndexOutOfBoundsException {
+        ResetCrawl();
+        for(int i = 0; i <= x; i++) {
+            GoToNext();
+        }
+        return current.Get();
+    }
+
     public void ResetCrawl() {
         current = null;
     }
@@ -176,7 +172,11 @@ public class LinkedList<T> implements LinkedListInterface<T> {
     }
 
     public T GetCurrent() {
-        return current.Get();
+        if(current != null) {
+            return current.Get();
+        }
+        else
+            return null;
     }
 
     public Node<T> GetLast(){

@@ -12,11 +12,17 @@ public interface AccountInterface {
 
     int GetIdentifier();
 
+    int GetOwner();
+
+    void SetOwner(int o);
+
     void Deposit(double x);
 
     void Withdraw(double x) throws InsufficientFundsException;
 
     double GetBalance();
+
+    void SetBalance(double b);
 
     void LinkUser(int user) throws ElementExistsException;
 

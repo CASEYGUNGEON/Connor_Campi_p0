@@ -8,7 +8,7 @@ public interface LinkedListInterface<T> {
 
     void Add(T element);
 
-    void Remove(Node<T> target) throws EmptyListException, ElementNotFoundException;
+    void Remove(Node<T> prev, Node<T> target);
 
     void Remove(T element) throws ElementNotFoundException, EmptyListException;
 
@@ -16,13 +16,15 @@ public interface LinkedListInterface<T> {
 
     Node<T> FindNode(T element) throws EmptyListException, ElementNotFoundException;
 
-    Node<T> FindPrev() throws IndexOutOfBoundsException, Exception;
+    Node<T> FindPrev() throws Exception;
 
     Node<T> FindPrev(Node<T> node);
 
     T GoToNext();
 
     T GoToStart() throws EmptyListException;
+
+    T GoToIndex(int x) throws IndexOutOfBoundsException;
 
     void ResetCrawl();
 
