@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ConnectionUtil {
+    //It lives!
     public static Connection CreateConnection() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://bankdb.cvsalbi9eqlo.us-west-1.rds.amazonaws.com/", "postgres", "8eoGX%Jx*srB5k");

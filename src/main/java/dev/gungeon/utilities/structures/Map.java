@@ -5,6 +5,7 @@ public class Map<K,V> implements MapInterface<K,V> {
     private V[] values;
     private int size;
 
+    //---- Constructors ----//
     public Map(){
         keys = (K[]) new Object[10];
         values = (V[]) new Object[10];
@@ -15,6 +16,8 @@ public class Map<K,V> implements MapInterface<K,V> {
         values = (V[]) new Object[size];
     }
 
+
+    //---- Manipulation ----//
     public boolean Add(K key, V value) {
         int x = GetIndex(key);
         if(x != -1)
@@ -49,6 +52,16 @@ public class Map<K,V> implements MapInterface<K,V> {
         }
     }
 
+    public boolean Set(K key, V value) {
+        int x = GetIndex(key);
+        if(x != -1) {
+            values[x] = value;
+            return true;
+        }
+        return Add(key, value);
+    }
+
+    //---- Query ----//
     public boolean ContainsKey(K key) {
         for(int i = 0; i < size; i++) {
             if(keys[i] == key)
@@ -95,15 +108,6 @@ public class Map<K,V> implements MapInterface<K,V> {
 
     public V GetByIndex(int x) {
         return values[x];
-    }
-
-    public boolean Set(K key, V value) {
-        int x = GetIndex(key);
-        if(x != -1) {
-            values[x] = value;
-            return true;
-        }
-        return Add(key, value);
     }
 
     public int Size() {

@@ -11,6 +11,9 @@ public class Account implements AccountInterface {
     private LinkedList<Double> history;
     private LinkedList<Integer> linked;
 
+    //---- Constructors ----//
+    //lots of them. you know, just in case.
+
     public Account() {
         balance = 0;
         history = new LinkedList<Double>();
@@ -48,6 +51,8 @@ public class Account implements AccountInterface {
         linked = new LinkedList<Integer>();
     }
 
+    //---- account name methods ----//
+
     public void SetName(String n) {
         name = n;
     }
@@ -56,6 +61,9 @@ public class Account implements AccountInterface {
         return name;
     }
 
+    //---- account ID methods. ----//
+
+    // used with JDBC calls to find data in table. not shown to user.
     public void SetIdentifier(int i) {
         identifier = i;
     }
@@ -64,6 +72,9 @@ public class Account implements AccountInterface {
         return identifier;
     }
 
+    //---- user ID methods ----//
+
+    // for pulling all user's accounts from database.
     public int GetOwner() {
         return owner;
     }
@@ -72,6 +83,8 @@ public class Account implements AccountInterface {
         owner = o;
     }
 
+
+    //---- balance-related methods ----//
     public void Deposit(double x) {
         balance += x;
         history.Add(x);
@@ -94,6 +107,8 @@ public class Account implements AccountInterface {
         balance = b;
     }
 
+
+    //[soda drinker pro voice] bonus soda
     public void LinkUser(int user) throws ElementExistsException {
         if(linked.Contains(user))
             throw new ElementExistsException("User already linked");

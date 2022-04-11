@@ -17,8 +17,8 @@ public class AccountDAOImpl {
             String sql = "insert into accounts values (default,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1,acc.GetName());
-            ps.setInt(2,acc.GetOwner());
-            ps.setDouble(3,acc.GetBalance());
+            ps.setDouble(2,acc.GetBalance());
+            ps.setInt(3,acc.GetOwner());
 
             ps.execute();
 
@@ -47,6 +47,7 @@ public class AccountDAOImpl {
             acc.SetName(rs.getString("name"));
             acc.SetOwner(rs.getInt("owner"));
             acc.SetBalance(rs.getDouble("balance"));
+            return acc;
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -57,7 +58,7 @@ public class AccountDAOImpl {
     public Account UpdateAccount(Account acc) {
         try {
             Connection conn = ConnectionUtil.CreateConnection();
-            String sql = "update accounts set name = ?, balance = ? where acc_id = ?";
+            String sql = "update accounts set acc_name = ?, balance = ? where acc_id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1,acc.GetName());
             ps.setDouble(2,acc.GetBalance());
@@ -86,11 +87,15 @@ public class AccountDAOImpl {
         }
     }
 
-    private LinkedList<Double> GetHistory(int accid, Connection conn) {
-
+    public boolean DeleteAccount(Account acc) {
+        return DeleteAccount(acc.GetIdentifier());
     }
 
-    private LinkedList<Double> UpdateHistory(Account acc, Connection conn) {
+    private LinkedList<Double> GetHistory(int accid, Connection conn) {
+        return new LinkedList<Double>();
+    }
+
+    private LinkedList<Double> UpdateHistory(Account acc, Connection conn) throws Exception {
         try {
             String sql = "select COUNT(*) from history where acc_id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -105,11 +110,11 @@ public class AccountDAOImpl {
                 Node<Double> cur = hist.GetCurrentNode();
                 while(cur != null)
                 {
-                    String sql = "insert into history values (default, ?, ?");
-                    PreparedStatement ps = conn.prepareStatement(sql);
-                    ps.setInt(1,acc.GetIdentifier());
-                    ps.setDouble(2,cur.Get());
-                    ps.execute();
+                    String sql2 = "insert into history values (default, ?, ?)";
+                    PreparedStatement ps2 = conn.prepareStatement(sql2);
+                    ps2.setInt(1,acc.GetIdentifier());
+                    ps2.setDouble(2,cur.Get());
+                    ps2.execute();
                 }
             }
             return hist;
@@ -117,5 +122,6 @@ public class AccountDAOImpl {
         catch (SQLException e) {
             e.printStackTrace();
         }
+        throw new Exception("History update failed");
     }
 }

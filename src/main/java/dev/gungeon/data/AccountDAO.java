@@ -14,6 +14,8 @@ public interface AccountDAO {
 
     boolean DeleteAccount(int id);
 
+    boolean DeleteAccount(Account acc);
+
     LinkedList<Double> GetHistory(int accid, Connection conn);
 
     LinkedList<Double> UpdateHistory(Account acc, Connection conn);

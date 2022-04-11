@@ -12,6 +12,8 @@ public interface UserAccInterface {
 
     LinkedList<Account> GetAccs();
 
+    void SetName(String name);
+
     String GetName();
 
     int GetId();

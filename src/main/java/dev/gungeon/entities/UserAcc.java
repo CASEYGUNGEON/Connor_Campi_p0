@@ -7,17 +7,31 @@ import dev.gungeon.utilities.structures.Node;
 
 public class UserAcc implements UserAccInterface {
 
-    private LinkedList<Account> accounts;
+    private LinkedList<Account> accounts = new LinkedList<Account>();
     private String accName;
     private String password;
     private int accId;
 
+    //---- Constructors ----//
+    //There's fewer here!
+
     public UserAcc(String name, String pw, int id) {
-        accounts = new LinkedList<Account>();
         accName = name;
         password = pw;
         accId = id;
     }
+
+    public UserAcc(String name, String pw) {
+        accName = name;
+        password = pw;
+    }
+
+    public UserAcc(int id) {
+        accId = id;
+    }
+
+    //---- Credentials methods ----//
+    //if you dont know what credentials are i dont think a one-line comment is gonna help
 
     public void SetPassword(String pw) {
         password = pw;
@@ -31,6 +45,10 @@ public class UserAcc implements UserAccInterface {
         return accName;
     }
 
+
+    //---- Account methods ----//
+    //like, money account. not user account.
+
     public int GetId() {
         return accId;
     }
@@ -42,6 +60,14 @@ public class UserAcc implements UserAccInterface {
     public LinkedList<Account> GetAccs() {
         return accounts;
     }
+
+    @Override
+    public void SetName(String name) {
+        accName = name;
+    }
+
+            //-- Money methods --//
+            //it's a subset of account methods so i'm indenting it more
 
     public void Deposit(int acc, double x) throws ElementNotFoundException {
         FindAccount(acc).Deposit(x);
@@ -56,6 +82,7 @@ public class UserAcc implements UserAccInterface {
         return FindAccount(acc).GetBalance();
     }
 
+    //I don't think i'm actually using any of these right now.
     public void CreateAcc(String name) throws ElementExistsException {
         accounts.Add(new Account(name,accId));
     }

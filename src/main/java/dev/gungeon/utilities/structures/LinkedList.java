@@ -10,6 +10,7 @@ public class LinkedList<T> implements LinkedListInterface<T> {
     private Node<T> current;
     private int size;
 
+    //---- Constructors ----//
     public LinkedList() {
         Node<T> start = null;
         Node<T> last = null;
@@ -20,6 +21,7 @@ public class LinkedList<T> implements LinkedListInterface<T> {
         Add(element);
     }
 
+    //---- Manipulation ----//
     public void Add(T element) {
         if(start == null)
         {
@@ -65,6 +67,7 @@ public class LinkedList<T> implements LinkedListInterface<T> {
         throw new ElementNotFoundException("Element Not Found");
     }
 
+    //---- Query ----//
     public boolean Contains(T element) {
         if(size > 0){
             Node<T> cur = start;
