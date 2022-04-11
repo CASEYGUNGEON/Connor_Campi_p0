@@ -133,7 +133,7 @@ public class UserAccDAOImpl implements UserAccDAO {
     public LinkedList<Account> GetAccounts(int id) {
         try {
             Connection conn = ConnectionUtil.CreateConnection();
-            String sql = "select * from accounts where user_id = ?";
+            String sql = "select * from accounts where user_id = ? order by acc_id asc";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
