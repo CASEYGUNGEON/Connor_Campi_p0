@@ -16,7 +16,7 @@ public class Application {
         AccountDAOImpl accdao = new AccountDAOImpl();
         UserAccDAOImpl userdao = new UserAccDAOImpl();
 
-        System.out.println("Welcome to %BANKNAME Bank!");
+        System.out.println("Welcome to %BANKNAME Bank!\n");
         System.out.println("What do you need today? Select one:");
         System.out.println("1 - Create User Account\n2 - Access User Account");
         int choice = scanner.nextInt();
@@ -93,7 +93,7 @@ public class Application {
                                             case 2: { //deposit
                                                 System.out.println("\nHow much would you like to deposit?");
                                                 double x = scanner.nextDouble();
-                                                if(String.valueOf(x).split("\\.")[1].length() < 3) {
+                                                if(String.valueOf(x).split("\\.")[1].length() < 3 && x > 0) {
                                                     acc.Deposit(x);
                                                     accdao.UpdateAccount(acc);
                                                     System.out.println("Deposit successful.");
@@ -105,7 +105,7 @@ public class Application {
                                             case 3: { //withdraw
                                                 System.out.println("\nHow much would you like to withdraw?");
                                                 double x = scanner.nextDouble();
-                                                if(String.valueOf(x).split("\\.")[1].length() < 3) {
+                                                if(String.valueOf(x).split("\\.")[1].length() < 3 && x > 0) {
                                                     try {
                                                         acc.Withdraw(x);
                                                         accdao.UpdateAccount(acc);
